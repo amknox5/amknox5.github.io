@@ -66,11 +66,23 @@
                     const pageTitle = document.querySelector('.labTitle');
                     const pageHeader = document.querySelector('.labHeader');
                     const pageBody = document.querySelector('.labBody');
+                    const pageFlexOuter = document.querySelector('.flex-outer');
+                    const pageCheckBoxLabel = document.querySelector('.checkbox-list-label');
+                    const pageFlexInner = document.querySelectorAll('.flex-inner li label');
+                    const fruitArray = ['banana', 'grapes', 'orange'];
+                    pageFlexInner.forEach((el, i) => {
+                        const text = el.innerText;
+                        console.log(text);
+                        el.innerText = fruitArray[i];
+                    })
                     console.log(pageTitle);
                     console.log(pageHeader);
                     pageTitle.innerHTML = response;
                     pageHeader.innerHTML = response;
                     pageBody.style.backgroundColor = "purple";
+                    pageFlexOuter.style.margin = "0 auto";
+                    pageCheckBoxLabel.innerHTML = "<p>Fruits</p>";
+                    
                 })
             } 
         </script>
