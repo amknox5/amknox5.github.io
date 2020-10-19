@@ -17,6 +17,12 @@ function sortFunction(a, b, key) {
   return 0;
 }
 
+function getRandomIntInclusive(min, max) {
+  this.min = Math.ceil(min);
+  this.max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min + 1) + min);
+}
+
 document.body.addEventListener('submit', async (e) => {
   e.preventDefault(); // this stops whatever the browser wanted to do itself.
   const form = $(e.target).serializeArray(); // here we're using jQuery to serialize the form
@@ -29,8 +35,29 @@ document.body.addEventListener('submit', async (e) => {
   })
     .then((fromServer) => fromServer.json())
     .then((fromServer) => {
-      // You're going to do your lab work in here. Replace this comment.
       console.log('fromServer', fromServer);
+      if (document.querySelector('.flex-inner')) {
+        document.querySelector('.flex-inner').remove();
+      }
+      
+      const arr1 = range(10);
+      const arr2 = arr1.map(() => {
+        const number = getRandomIntInclusive(0, 243);
+        return fromServer[number];
+      });
+      console.log(arr2);
+
+      const reverseList = arr2.sort((a, b) => sortFunction(b, a, 'name'));
+      const ul = document.createElement('ul');
+      ul.className = 'flex-inner';
+      $('form').prepend(ul);
+
+      reverseList.forEach((el, i) => {
+        const li = document.createElement('li');
+        $(li).append(`<input type="checkbox" value=${el.code} id=${el.code}/>`);
+        $(li).append(`<label for=${el.code}>${el.name}</label>`);
+        $(ul).append(li);
+      });
     })
     .catch((err) => console.log(err));
 });
